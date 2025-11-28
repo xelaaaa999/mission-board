@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mission Board – Login</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Mission Board Auth (MVP)</h1>
+
+    <div id="auth-box">
+      <!-- Toggle buttons -->
+      <div class="tabs">
+        <button id="tab-login" class="tab active">Log in</button>
+        <button id="tab-signup" class="tab">Sign up</button>
+      </div>
+
+      <!-- Login form -->
+      <form id="login-form" class="form visible">
+        <label>
+          Email
+          <input type="email" id="login-email" required />
+        </label>
+        <label>
+          Password
+          <input type="password" id="login-password" required />
+        </label>
+        <button type="submit">Log in</button>
+        <p class="message" id="login-message"></p>
+      </form>
+
+      <!-- Signup form -->
+      <form id="signup-form" class="form">
+        <label>
+          Email
+          <input type="email" id="signup-email" required />
+        </label>
+        <label>
+          Password
+          <input type="password" id="signup-password" required />
+        </label>
+        <button type="submit">Sign up</button>
+        <p class="message" id="signup-message"></p>
+      </form>
+    </div>
+
+    <!-- Logged-in view -->
+    <div id="user-box" class="hidden">
+      <h2>Welcome, <span id="user-email"></span></h2>
+      <button id="logout-btn">Log out</button>
+    </div>
+  </div>
+
+  <!-- Our auth logic -->
+  <script type="module" src="auth.js"></script>
+</body>
+</html>
