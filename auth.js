@@ -1,4 +1,6 @@
 // Try loading config.js (ignored in git)
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
 import * as config from "./config.js";
 
 const SUPABASE_URL = config.SUPABASE_URL;
