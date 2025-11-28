@@ -1,9 +1,8 @@
-// auth.js
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+// Try loading config.js (ignored in git)
+import * as config from "./config.js";
 
-// 1. Configure Supabase
-const SUPABASE_URL = "SUPABASE_URL_HERE";          // e.g. https://xyzcompany.supabase.co
-const SUPABASE_ANON_KEY = "SUPABASE_ANON_KEY_HERE";
+const SUPABASE_URL = config.SUPABASE_URL || "PLACEHOLDER_URL";
+const SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY || "PLACEHOLDER_KEY";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
