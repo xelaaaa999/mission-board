@@ -1,8 +1,8 @@
 // Try loading config.js (ignored in git)
 import * as config from "./config.js";
 
-const SUPABASE_URL = config.SUPABASE_URL || "PLACEHOLDER_URL";
-const SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY || "PLACEHOLDER_KEY";
+const SUPABASE_URL = config.SUPABASE_URL;
+const SUPABASE_ANON_KEY = config.SUPABASE_ANON_KEY;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
