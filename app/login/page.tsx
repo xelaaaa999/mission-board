@@ -1,74 +1,85 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabaseclient";
 import Link from "next/link";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
-    console.log("login function triggered");
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     setError("");
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    
-    console.log("LOGIN RESULT:", data, error);
-    
-    if (error) setError(error.message);
-    else router.push("/dashboard"); // redirect to home after login
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    setLoading(false);
-   
+      const data = await response.json();
 
+      if (!response.ok) {
+        setError(data.error || "Login failed");
+        setLoading(false);
+      } else {
+        // Success - redirect with full page reload
+        window.location.href = "/dashboard";
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An unexpected error occurred");
+      setLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#072042] flex justify-center items-center">
       <div className="bg-white/90 backdrop-blur-lg border border-gray-200 p-8 rounded-xl w-full max-w-md shadow-xl">
-        <h1 className="text-2xl font-semibold mb-6 text-gray-900">
-          Login
-        </h1>
+        <h1 className="text-2xl font-semibold mb-6 text-gray-900">Login</h1>
 
         {error && (
-          <p className="text-red-500 text-sm mb-3">{error}</p>
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            {error}
+          </div>
         )}
 
-        <input
-          className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
-          type="email"
-          placeholder="Email..."
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <form onSubmit={handleLogin}>
+          <input
+            className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
+            type="email"
+            placeholder="Email..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={loading}
+            required
+          />
 
-        <input
-          className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
-          type="password"
-          placeholder="Password..."
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
+            type="password"
+            placeholder="Password..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={loading}
+            required
+          />
 
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
-        >
-          {loading ? "Logging in..." : "Login"}
-        </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
 
         <p className="text-sm text-gray-600 mt-4">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link href="/signup" className="text-blue-600 underline">
             Sign Up
           </Link>

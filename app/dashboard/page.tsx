@@ -8,10 +8,12 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) {
+    redirect("/login");
+  }
 
   return (
-    <div className="p-10 text-white">
+    <div className="min-h-screen bg-[#072042] p-10 text-white">
       <h1 className="text-3xl font-bold">Welcome, {user.email}</h1>
       <p className="mt-4 text-gray-300">Your dashboard is ready.</p>
     </div>

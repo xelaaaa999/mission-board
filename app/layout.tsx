@@ -1,19 +1,10 @@
-import "./globals.css";
-import NavbarWrapper from "@/components/layout/NavbarWrapper";
-import React from "react";
-
-export const metadata = {
-  title: "Mission Board",
-  description: "A task collaboration app",
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <body>
-        <NavbarWrapper />
-        {children}
-      </body>
-    </html>
-  );
+export async function logout() {
+  try {
+    await fetch("/api/auth/logout", { method: "POST" });
+  } catch (error) {
+    console.error("Logout error:", error);
+  } finally {
+    // Always redirect to login, even if logout fails
+    window.location.href = "/login";
+  }
 }
