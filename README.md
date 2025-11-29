@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Mission Board  (Haven't fully commited to the name)
+*A clean, modern platform for collaborative side-projects.*
 
-## Getting Started
+Mission Board is a lightweight, modern workspace for organizing ideas, missions, user stories, and feedback.  
 
-First, run the development server:
+The goal is to create a platform with better clarity, deeper reasoning, and the ability for anyone to propose improvements.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This is an early version of the platform — starting with a polished, reusable **Mission Card component** that will become the backbone of the UI.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🎯 Vision
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Mission Board aims to solve a real problem:
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+> Most side-projects die because founders build alone, without structured feedback or collaborators who understand the vision.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Mission Board will eventually provide:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- A space to **publish ideas**
+- A public/private **Mission Feed**
+- Structured feedback from anyone (not just the project owner)
+- Proposal cards  
+- Collaborative refinement  
+- Lightweight voting based on reasoning, not popularity  
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
