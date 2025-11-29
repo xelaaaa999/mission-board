@@ -1,34 +1,17 @@
-import type { Metadata } from "next";
-import NavbarWrapper from "@/components/layout/NavbarWrapper";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import NavbarWrapper from "@/components/layout/NavbarWrapper";
+import React from "react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
+export const metadata = {
   title: "Mission Board",
-  description: "A collaborative mission platform",
+  description: "A task collaboration app",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        
-        <NavbarWrapper />  {/* Navbar now hides automatically */}
-
+      <body>
+        <NavbarWrapper />
         {children}
       </body>
     </html>
