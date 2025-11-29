@@ -20,7 +20,7 @@ export default function LoginPage() {
     });
 
     if (error) setError(error.message);
-    else window.location.href = "/"; // redirect to home after login
+    else window.location.href = "/dashboard"; // redirect to home after login
 
     setLoading(false);
   };
