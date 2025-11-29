@@ -1,10 +1,29 @@
-export async function logout() {
-  try {
-    await fetch("/api/auth/logout", { method: "POST" });
-  } catch (error) {
-    console.error("Logout error:", error);
-  } finally {
-    // Always redirect to login, even if logout fails
-    window.location.href = "/login";
-  }
+import type { Metadata } from "next";
+import Navbar from "@/components/layout/Navbar";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+export const metadata: Metadata = {
+  title: "Mission Board",
+  description: "Collaborate on side projects",
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {children}
+      </body>
+    </html>
+  );
 }
