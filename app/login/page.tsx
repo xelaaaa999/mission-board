@@ -15,7 +15,7 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
-    console.log("Attempting login with:", email);
+    console.log("login function triggered");
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -33,8 +33,8 @@ export default function LoginPage() {
     // Success → go to dashboard
     window.location.href = "/dashboard";
   };
-
-  return (
+  
+return (
     <div className="min-h-screen bg-[#072042] flex justify-center items-center">
       <div className="bg-white/90 backdrop-blur-lg border border-gray-200 p-8 rounded-xl w-full max-w-md shadow-xl">
         <h1 className="text-2xl font-semibold mb-6 text-gray-900">
