@@ -4,6 +4,7 @@ import { BetterMissionCard } from "@/components/cards/BetterMissionCard";
 import { LogIn } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/lib/supabaseclient";
+import clsx from "clsx";
 
 export default function HomePage() {
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -12,14 +13,13 @@ export default function HomePage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // LOGIN + SIGNUP HANDLER
+  // AUTH HANDLER
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     if (mode === "signup") {
-      // SIGNUP
       const { error } = await supabase.auth.signUp({
         email,
         password,
@@ -31,13 +31,12 @@ export default function HomePage() {
         return;
       }
 
-      alert("Signup successful! Check your email to confirm your account.");
+      alert("Signup successful! Please verify your email.");
       setMode("login");
       setLoading(false);
       return;
     }
 
-    // LOGIN
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -54,19 +53,17 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#072042] flex">
-      {/* LEFT: Description / Mission / Branding */}
+      {/* LEFT SECTION */}
       <div className="flex-1 flex flex-col justify-center items-start px-16 text-white space-y-10">
         <LogIn className="text-white" size={48} />
         <h1 className="text-4xl font-bold">Welcome to Mission Board</h1>
 
         <p className="text-gray-300 text-lg max-w-lg">
           Manage your side projects, collaborate with others, and evolve ideas
-          into fully working products.  
-          Mission Board helps founders and builders stay aligned through clean
-          cards, feedback, and execution.
+          into fully working products. Mission Board helps founders and builders
+          stay aligned through clean cards, feedback, and execution.
         </p>
 
-        {/* Example Mission Card Preview */}
         <div className="mt-10 max-w-md">
           <BetterMissionCard
             title="Get Started on Our Platform"
@@ -78,7 +75,7 @@ export default function HomePage() {
             ]}
             subtasks={[
               { id: 1, text: "Create your account (Sign Up)", done: true },
-              { id: 2, text: "Verify your email address", done: false },
+              { id: 2, text: "Verify your email address", done: true },
               { id: 3, text: "Login to your new account", done: false },
               { id: 4, text: "Start building your first project!", done: false },
             ]}
@@ -89,60 +86,61 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* RIGHT: Auth Panel */}
-      <div className="flex-1 flex justify-center items-center bg-white/10 backdrop-blur-md p-10">
-        <div className="bg-white/90 backdrop-blur-lg border border-gray-200 p-8 rounded-xl w-full max-w-md shadow-xl">
+      {/* RIGHT PANEL — FIXED WIDTH (IMPORTANT!) */}
+      <div className="w-full max-w-md flex justify-center items-center bg-white/10 backdrop-blur-md p-10">
+        <div className="relative overflow-hidden w-full">
 
-          <h2 className="text-2xl font-semibold mb-6 text-gray-900 text-center">
-            {mode === "login" ? "Login to Continue" : "Create an Account"}
-          </h2>
+          {/* SLIDING CONTAINER — 200% WIDTH */}
+          <div
+            className={clsx(
+              "flex transition-transform duration-500 w-[200%]",
+              mode === "login" ? "translate-x-0" : "-translate-x-1/2"
+            )}
+          >
 
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-              {error}
-            </div>
-          )}
+            {/* LOGIN PANEL */}
+            <div className="w-1/2 bg-white/90 backdrop-blur-lg border border-gray-200 p-8 rounded-xl shadow-xl">
+              <h2 className="text-2xl font-semibold mb-6 text-gray-900 text-center">
+                Login to Continue
+              </h2>
 
-          <form onSubmit={handleAuth}>
-            <input
-              className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
-              type="email"
-              placeholder="Email..."
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={loading}
-              required
-            />
+              {error && mode === "login" && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                  {error}
+                </div>
+              )}
 
-            <input
-              className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
-              type="password"
-              placeholder="Password..."
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              disabled={loading}
-              required
-            />
+              <form onSubmit={handleAuth}>
+                <input
+                  className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
+                  type="email"
+                  placeholder="Email..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  required
+                />
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
-            >
-              {loading
-                ? mode === "login"
-                  ? "Logging in..."
-                  : "Signing up..."
-                : mode === "login"
-                ? "Login"
-                : "Sign Up"}
-            </button>
-          </form>
+                <input
+                  className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
+                  type="password"
+                  placeholder="Password..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={loading}
+                  required
+                />
 
-          {/* SWITCH MODE */}
-          <p className="text-sm text-gray-600 mt-4 text-center">
-            {mode === "login" ? (
-              <>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+                >
+                  {loading ? "Logging in..." : "Login"}
+                </button>
+              </form>
+
+              <p className="text-sm text-gray-600 mt-4 text-center">
                 Don’t have an account?{" "}
                 <span
                   className="text-blue-600 underline cursor-pointer"
@@ -153,9 +151,52 @@ export default function HomePage() {
                 >
                   Sign Up
                 </span>
-              </>
-            ) : (
-              <>
+              </p>
+            </div>
+
+            {/* SIGNUP PANEL */}
+            <div className="w-1/2 bg-white/90 backdrop-blur-lg border border-gray-200 p-8 rounded-xl shadow-xl">
+              <h2 className="text-2xl font-semibold mb-6 text-gray-900 text-center">
+                Create an Account
+              </h2>
+
+              {error && mode === "signup" && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                  {error}
+                </div>
+              )}
+
+              <form onSubmit={handleAuth}>
+                <input
+                  className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
+                  type="email"
+                  placeholder="Email..."
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={loading}
+                  required
+                />
+
+                <input
+                  className="w-full border rounded-md p-3 mb-3 text-gray-900 placeholder-gray-500"
+                  type="password"
+                  placeholder="Password..."
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  disabled={loading}
+                  required
+                />
+
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition disabled:opacity-50"
+                >
+                  {loading ? "Signing up..." : "Sign Up"}
+                </button>
+              </form>
+
+              <p className="text-sm text-gray-600 mt-4 text-center">
                 Already have an account?{" "}
                 <span
                   className="text-blue-600 underline cursor-pointer"
@@ -166,9 +207,9 @@ export default function HomePage() {
                 >
                   Login
                 </span>
-              </>
-            )}
-          </p>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
